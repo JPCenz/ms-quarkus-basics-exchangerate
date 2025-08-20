@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "522ee079-a10a-4ea7-a563-e71173020698",
+		"name": "Exchange Rate API",
+		"description": "API for retrieving currency exchange rates with rate limiting by DNI\n\nContact Support:\n Name: Exchange Rate Team\n Email: support@example.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45489861",
+		"_collection_link": "https://jcenzano-3842141.postman.co/workspace/J-Cenzano's-Workspace~ccff1c09-4fa8-4ad5-8ee1-024ca797a3d4/collection/45489861-522ee079-a10a-4ea7-a563-e71173020698?action=share&source=collection_link&creator=45489861"
+	},
+	"item": [
+		{
+			"name": "Get current exchange rate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"exchange-rate"
+					],
+					"query": [
+						{
+							"key": "dni",
+							"value": "12345678",
+							"description": "(Required) National identification number of the requester. Used for rate limiting."
+						}
+					]
+				},
+				"description": "Returns the current exchange rate for USD/PEN. Rate limiting is applied based on DNI."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"exchange-rate"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fecha\": \"2023-05-15\",\n  \"compra\": 3.65,\n  \"venta\": 3.68,\n  \"quota\": 3\n}"
+				},
+				{
+					"name": "Bad request - Invalid DNI format",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"exchange-rate"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"timestamp\": \"1952-01-12T21:32:35.214Z\"\n}"
+				},
+				{
+					"name": "Forbidden - Rate limit exceeded",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"exchange-rate"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"timestamp\": \"1952-01-12T21:32:35.214Z\"\n}"
+				},
+				{
+					"name": "Too many requests",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"exchange-rate"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"status": "Too Many Requests",
+					"code": 429,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"timestamp\": \"1952-01-12T21:32:35.214Z\"\n}"
+				},
+				{
+					"name": "Internal server error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/exchange-rate?dni=12345678",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"exchange-rate"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "12345678"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"timestamp\": \"1952-01-12T21:32:35.214Z\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8082"
+		}
+	]
+}
