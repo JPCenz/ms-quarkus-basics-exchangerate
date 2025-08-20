@@ -15,6 +15,12 @@ public class ExchangeRateResourceImpl implements ExchangeRateResource {
 
     @Inject
     TipoCambioService service;
+
+    /**
+     * Obtiene el cambio del dia
+     * @param dni
+     * @return ExchangeRateDto
+     */
     @Override
     public ExchangeRateDto getExchangeRate(String dni) {
         logger.info("Request para dni "+ dni);

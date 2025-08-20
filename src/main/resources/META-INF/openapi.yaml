@@ -1,0 +1,119 @@
+openapi: 3.1.0
+info:
+  title: Exchange Rate API
+  description: API for retrieving currency exchange rates with rate limiting by DNI
+  version: 1.0.0-SNAPSHOT
+  contact:
+    name: Exchange Rate Team
+    email: support@example.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: https://staging-api.example.com/v1
+    description: Staging server
+
+components:
+  schemas:
+    ExchangeRateDto:
+      type: object
+      description: Exchange rate information for USD/PEN currency pair
+      required:
+        - fecha
+        - compra
+        - venta
+        - quota
+      properties:
+        fecha:
+          type: string
+          format: date
+          description: Date when the exchange rate was established
+          example: "2023-05-15"
+        compra:
+          type: number
+          format: double
+          description: Buy rate for USD/PEN
+          example: 3.65
+        venta:
+          type: number
+          format: double
+          description: Sell rate for USD/PEN
+          example: 3.68
+        quota:
+          type: integer
+          format: int64
+          description: Remaining number of API calls available for this DNI
+          example: 3
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        timestamp:
+          type: string
+          format: date-time
+
+paths:
+  /api/exchange-rate:
+    get:
+      summary: Get current exchange rate
+      description: Returns the current exchange rate for USD/PEN. Rate limiting is applied based on DNI.
+      operationId: getExchangeRate
+      tags:
+        - Exchange Rates
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: dni
+        in: query
+        required: true
+        description: National identification number of the requester. Used for rate limiting.
+        schema:
+          type: string
+          pattern: '^[0-9]{8}$'
+          minLength: 8
+          maxLength: 8
+        example: "12345678"
+      responses:
+        "200":
+          description: Exchange rate retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExchangeRateDto"
+        "400":
+          description: Bad request - Invalid DNI format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Forbidden - Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+tags:
+  - name: Exchange Rates
+    description: Exchange rate operations
