@@ -41,17 +41,17 @@ public class TipoCambioServiceImpl implements TipoCambioService {
     @Override
     @Transactional
     public ExchangeRateDto consultarTipoCambio(String dni) {
-        TipoCambioProxy actualExchangeRate = rateRepository.getExchangeRate();
+
         LocalDate today = LocalDate.now();
         long count = Consulta.contarConsultasPorDni(dni, today);
         validateRequestPerUser(count);
         logger.info(String.format("Consultas para el dni %s cantidad %s", dni, count));
 
         Usuario usuario = getUsuario(dni);
-        saveConsulta(usuario, today);
-
+        TipoCambioProxy actualExchangeRate = rateRepository.getExchangeRate();
         var response = mapper.toConsultaDto(actualExchangeRate);
         response.quota = count;
+        saveConsulta(usuario, today);
         return response;
     }
 
