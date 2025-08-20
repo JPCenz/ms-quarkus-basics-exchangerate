@@ -64,3 +64,11 @@ If you want to learn more about building native executables, please consult <htt
 Easily start your RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## Case Study
+
+Evidences of running app
+
+![RespuestaOK.png](RespuestaOK.png)
+
+![LimitResponse.png](LimitResponse.png)
